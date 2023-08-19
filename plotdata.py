@@ -60,10 +60,10 @@ if __name__ == "__main__":
 
         if counter != 0 and counter % 32 == 0:
             fig.set_size_inches(18,8)
-            fig.savefig("figures\\" + y_axis + ".png", dpi=120)
+            fig.savefig("raw_figures\\" + y_axis + ".png", dpi=120)
 
-    print("All transfers complete.")
+    print("All transfers complete. Figures saved in \'raw_figures\' folder.")
 
-    plt.show(block = False)
+    # plt.show(block = False)
 
 
