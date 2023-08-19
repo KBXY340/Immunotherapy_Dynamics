@@ -2,10 +2,11 @@ import matplotlib.pyplot as plt
 import numpy as np
 import os
 import pandas as pd
+from scipy.interpolate import make_interp_spline as spline
 
 
 def plot_avg(csv_file, conc, pep, axis, window):
-    '''Opens a csv file and saves the rolling mean data in an np array. Assigns data to the x and y axes, and sets the axis labels.'''
+    '''Opens a csv file and saves the rolling mean data in an np array. Assigns data to the x and y axes, smooths using scipy, and sets the axis labels.'''
 
     import csv
     with open(csv_file, "r") as file:
@@ -15,7 +16,12 @@ def plot_avg(csv_file, conc, pep, axis, window):
     xdata = npdata[:, 0]
     ydata = npdata[:, 2]
 
-    axis.plot(xdata, ydata, label = conc)
+    x_y_spline = spline(xdata, ydata)
+
+    smoothed_xdata = np.linspace(xdata.min(), xdata.max(), 500)
+    smoothed_ydata = x_y_spline(smoothed_xdata)
+
+    axis.plot(smoothed_xdata, smoothed_ydata, label = conc)
     axis.set_title(pep)
     axis.set_xlabel("Time")
     axis.set_yscale("log")

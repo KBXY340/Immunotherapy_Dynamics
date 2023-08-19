@@ -22,9 +22,6 @@ def generate_plot(csv_file, conc, pep, axis):
     axis.legend(loc="upper right")
 
 
-
-
-
 if __name__ == "__main__":
 
     df = pd.read_excel("reorganized_data.xlsx")
