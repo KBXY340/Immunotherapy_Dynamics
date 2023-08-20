@@ -25,7 +25,10 @@ def plot_graph(xdata, ydata, conc, pep, axis):
     axis.plot(smoothed_xdata, smoothed_ydata, label = conc)
     axis.set_title(pep)
     axis.set_xlabel("Time")
-    axis.set_yscale("log")
+    axis.set_ylim(bottom = -0.1, top = 0.1)
+    print(np.min(smoothed_ydata))
+    print(np.max(smoothed_ydata))
+    # axis.set_yscale("log")
     axis.legend(loc="upper right")
 
 
@@ -38,6 +41,8 @@ if __name__ == "__main__":
     peptides_index = 0
     concentrations = ["100nM", "10nM", "1nM", "1microM"]
     concentrations_index = 0
+    ax_outer_i = 0
+    ax_inner_i = 0
 
     import csv
     for csv_file in file_list:
@@ -52,25 +57,39 @@ if __name__ == "__main__":
         y_axis = header[1]
 
         if counter % 32 == 0:
-            fig, ax = plt.subplots(nrows=1, ncols=8, sharey = True)
-            ax[peptides_index].set_ylabel(y_axis)
+            fig, ax = plt.subplots(nrows=2, ncols=4, figsize=(18,6))
+            ax[ax_outer_i][ax_inner_i].set_ylabel(y_axis)
 
         xprime, yprime = derivative(xdata, ydata)
 
-        plot_graph(xprime, yprime, concentrations[concentrations_index], peptides[peptides_index], ax[peptides_index])
+        plot_graph(xprime, yprime, concentrations[concentrations_index], peptides[peptides_index], ax[ax_outer_i][ax_inner_i])
         counter += 1
         concentrations_index += 1
+        # ax_inner_i += 1
 
         if counter % 4 == 0:
+
             if peptides_index == 7:
                 peptides_index = 0
+                ax_outer_i = 0
+                ax_inner_i = 0
             else:
                 peptides_index += 1
 
             concentrations_index = 0
+            ax_inner_i += 1
+
+        if counter % 16 == 0:
+            ax_inner_i = 0
+
+            if counter % 32 != 0:
+                ax_outer_i = 1
+            else:
+                ax_outer_i = 0
+
 
         if counter != 0 and counter % 32 == 0:
-            fig.set_size_inches(20,8)
+            fig.set_size_inches(18,15)
             fig.savefig("derivative_figures\\" + y_axis + ".png", dpi=120)
 
     plt.show(block = False)
