@@ -87,7 +87,7 @@ if __name__ == "__main__":
             fig.set_size_inches(18,8)
             fig.savefig("averaged_figures\\" + y_axis + ".png", dpi=120)
 
-    print("All transfers complete. Figures saved in \'averaged_figures\' folder.")
+    print("All plots complete. Figures saved in \'averaged_figures\' folder. Rolling averages updated in \'csv_files\' folder.")
 
     # UNCOMMENT BELOW TO SHOW FIGURES AFTER ALL PLOTTING HAS BEEN COMPLETED, ELSE FIGURES CAN BE VIEWED IN THE SPECIFIED FOLDER
     # plt.show(block = False)

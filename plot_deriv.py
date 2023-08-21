@@ -130,7 +130,7 @@ if __name__ == "__main__":
             fig.set_size_inches(18,15)
             fig.savefig("derivative_figures\\" + y_axis + ".png", dpi=120)
 
-    print("All transfers complete. Figures saved in \'derivative_figures\' folder.")
+    print("All plots complete. Figures saved in \'derivative_figures\' folder.")
 
     # UNCOMMENT BELOW TO SHOW FIGURES AFTER ALL PLOTTING HAS BEEN COMPLETED, ELSE FIGURES CAN BE VIEWED IN THE SPECIFIED FOLDER
     # plt.show(block = False)
