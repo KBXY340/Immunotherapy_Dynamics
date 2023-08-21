@@ -52,40 +52,42 @@ if __name__ == "__main__":
     rolling_window = 5
 
     for file in file_list:
-        df = pd.read_csv("csv_files\\" + file)
 
-        # add a new column to the csv files that takes the cytokine values column and computes a rolling mean
-        df['rolling_avg'] = df.iloc[:,[1]].rolling(rolling_window).mean()
-        df.to_csv("csv_files\\" + file, index = False, header = True)
+        if file != ".placeholder":
+            df = pd.read_csv("csv_files\\" + file)
 
-        # set the y axis label as the second element of the header row
-        y_axis = df.columns[1]
+            # add a new column to the csv files that takes the cytokine values column and computes a rolling mean
+            df['rolling_avg'] = df.iloc[:,[1]].rolling(rolling_window).mean()
+            df.to_csv("csv_files\\" + file, index = False, header = True)
 
-        # for the 0-th iteration and, thereafter, every 32 iterations (AKA 8 axes on one figure), create a new figure to graph the next 8 axes
-        if counter % 32 == 0:
-            fig, ax = plt.subplots(nrows=1, ncols=8, sharey = True)
-            print("Current figure being created: " + str(counter / 32))
+            # set the y axis label as the second element of the header row
+            y_axis = df.columns[1]
 
-            # because 'sharey' is on, the y axis label need only be set for every 8 axes
-            ax[peptides_index].set_ylabel(y_axis)
+            # for the 0-th iteration and, thereafter, every 32 iterations (AKA 8 axes on one figure), create a new figure to graph the next 8 axes
+            if counter % 32 == 0:
+                fig, ax = plt.subplots(nrows=1, ncols=8, sharey = True)
+                print("Current figure being created: " + str(counter / 32))
 
-        plot_avg("csv_files\\" + file, concentrations[concentrations_index], peptides[peptides_index], ax[peptides_index], rolling_window)
-        counter += 1
-        concentrations_index += 1
+                # because 'sharey' is on, the y axis label need only be set for every 8 axes
+                ax[peptides_index].set_ylabel(y_axis)
 
-        # for every 4 iterations, a new axes should be plotted on, hence incrementing peptides_index; but, after incrementing peptides_index 8 times, the axes should start back at '0' index because a new figure is created
-        if counter % 4 == 0:
-            if peptides_index == 7:
-                peptides_index = 0
-            else:
-                peptides_index += 1
+            plot_avg("csv_files\\" + file, concentrations[concentrations_index], peptides[peptides_index], ax[peptides_index], rolling_window)
+            counter += 1
+            concentrations_index += 1
 
-            concentrations_index = 0
+            # for every 4 iterations, a new axes should be plotted on, hence incrementing peptides_index; but, after incrementing peptides_index 8 times, the axes should start back at '0' index because a new figure is created
+            if counter % 4 == 0:
+                if peptides_index == 7:
+                    peptides_index = 0
+                else:
+                    peptides_index += 1
 
-        # for every 32 iterations (not considering 0-th), the current opened figure is saved into a folder
-        if counter != 0 and counter % 32 == 0:
-            fig.set_size_inches(18,8)
-            fig.savefig("averaged_figures\\" + y_axis + ".png", dpi=120)
+                concentrations_index = 0
+
+            # for every 32 iterations (not considering 0-th), the current opened figure is saved into a folder
+            if counter != 0 and counter % 32 == 0:
+                fig.set_size_inches(18,8)
+                fig.savefig("averaged_figures\\" + y_axis + ".png", dpi=120)
 
     print("All plots complete. Figures saved in \'averaged_figures\' folder. Rolling averages updated in \'csv_files\' folder.")
 
