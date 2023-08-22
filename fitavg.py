@@ -34,7 +34,7 @@ def plot_avg(csv_file, conc, pep, axis, window):
 
     axis.plot(smoothed_xdata, smoothed_ydata, label = conc)
     axis.set_title(pep)
-    axis.set_xlabel("Time")
+    axis.set_xlabel("Time (h)")
     axis.set_yscale("log")
     axis.legend(loc="upper right")
 

@@ -33,7 +33,7 @@ def generate_plot(csv_file, conc, pep, axis):
     # plots the data with conc legend on the specific matplotlib subplot axis of the current opened figure
     axis.plot(xdata, ydata, marker = "o", label = conc)
     axis.set_title(pep)
-    axis.set_xlabel("Time")
+    axis.set_xlabel("Time (h)")
     axis.set_yscale("log")
     axis.legend(loc="upper right")
 

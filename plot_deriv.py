@@ -46,7 +46,7 @@ def plot_graph(xdata, ydata, conc, pep, axis):
 
     axis.plot(smoothed_xdata, smoothed_ydata, label = conc)
     axis.set_title(pep)
-    axis.set_xlabel("Time")
+    axis.set_xlabel("Time (h)")
     axis.legend(loc="upper right")
 
 
