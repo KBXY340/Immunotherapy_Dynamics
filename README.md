@@ -1,5 +1,7 @@
 # Immunotherapy_Dynamics
 ## About
+Repository for first year university summer research project. <br />
+<br />
 All the code and data used for data reproduction and manipulation of the initial raw data provided in the paper: "Universal antigen encoding of T cell activation from high-dimensional cytokine dynamics" written by Sooraj R. Achar, François X. P. Bourassa, Thomas J. Rademaker, Angela Lee, Taisuke Kondo, Emanuel Salazar-Cavazos, John S. Davies, Naomi Taylor, Paul François, and Grégoire Altan-Bonnet.
 
 ## Important
