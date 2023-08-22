@@ -16,15 +16,22 @@ from scipy.interpolate import make_interp_spline as spline
 
 
 def derivative(xdata, ydata):
+    # smooth the data before calculating derivative to minimize noise
+    x_y_spline = spline(xdata, ydata)
+
+    smoothed_xdata = np.linspace(xdata.min(), xdata.max(), 500)
+    smoothed_ydata = x_y_spline(smoothed_xdata)
+
+
     # the new y values are calculated by the slope equation (rise/run)
-    yprime = np.diff(ydata)/np.diff(xdata)
+    yprime = np.diff(smoothed_ydata)/np.diff(smoothed_xdata)
 
     # initialize a list to store the new x values
     xprime = []
 
     # for every datapoint in the new y values, calculated a corresponding x value; the midpoint between adjascent original x values was chosen
     for i in range(len(yprime)):
-        x_mid = (xdata[i+1] + xdata[i]) / 2
+        x_mid = (smoothed_xdata[i+1] + smoothed_xdata[i]) / 2
         xprime = np.append(xprime, x_mid)
 
     return xprime, yprime
@@ -83,7 +90,7 @@ if __name__ == "__main__":
                 print("Current figure being created: " + str(counter / 32))
 
                 # for figures with subplots across more than 1 row, the axes indices are referred to like nested lists
-                ax[ax_outer_i][ax_inner_i].set_ylabel(y_axis)
+                ax[ax_outer_i][ax_inner_i].set_ylabel(y_axis + " rate")
 
             xprime, yprime = derivative(xdata, ydata)
 
